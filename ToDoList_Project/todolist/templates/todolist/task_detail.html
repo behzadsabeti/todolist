@@ -1,0 +1,27 @@
+{% extends "base_menu.html" %}
+{% load humanize %} <!-- https://docs.djangoproject.com/en/3.0/ref/contrib/humanize -->
+{% block content %}
+
+<span style="float: right;">
+({{ task.updated_at|naturaltime }})
+{% if task.owner == user %}
+<a href="{% url 'todolist:task_update' task.id %}"><i class="fa fa-pencil"></i></a>
+<a href="{% url 'todolist:task_delete' task.id %}"><i class="fa fa-trash"></i></a>
+{% endif %}
+</span>
+<h1>{{ task.title }}</h1>
+<p>
+{{ task.text }}
+</p>
+{% if task.tags.all %}
+<p>Tags:
+  {% for tag in task.tags.all %}
+  <span style="border:1px grey solid; background-color: LightGreen;">{{ tag }}</span>
+  {% endfor %}
+</p>
+{% endif %}
+
+<p>
+<a href="{% url 'todolist:all' %}">All tasks</a>
+</p>
+{% endblock %}
